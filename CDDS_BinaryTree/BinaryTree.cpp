@@ -4,6 +4,15 @@
 
 BinaryTree::~BinaryTree()
 {
+	//This destructor will utilize remove to remove everything in the list, including all pointers... this will allow us to destroy the entire tree in one call!
+	while (m_root->hasLeft() || m_root->hasRight())
+	{
+		//removes the root and everything attached to it
+		remove(m_root->getData());
+
+		//deletes the root after everything else is removed
+		delete m_root;
+	}
 }
 
 void BinaryTree::insert(int value)
