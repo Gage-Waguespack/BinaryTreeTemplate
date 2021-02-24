@@ -79,24 +79,28 @@ void BinaryTree::remove(int value)
 	//and another to hold a reference to its parent.
 
 	//Pointer to a node
-	TreeNode* currentNode{};
+	TreeNode* currentNode = m_root;
 
 	//Pointer to the parent of iter1's node
-	TreeNode* nodeParent{};
+	TreeNode* nodeParent = m_root;
 
 	//Try to find the node that matches the value given and its parent in the tree.
 	//If the node cannot be found return.
-	if (value != currentNode->getData())
+	findNode(value, currentNode, nodeParent);
+	if (false)
 	{
 		return;
 	}
 
 	//Check to see if the node has a right
-	currentNode->hasRight();
+	if (currentNode->hasRight())
+	{
+		
+	}
 
 		//Initialize two iterators to find the node whose data will be copied and its parent.
-	TreeNode* iter1{};
-	TreeNode* iter2{};
+	TreeNode* iter1 = new TreeNode();
+	TreeNode* iter2 = new TreeNode();
 
 	TreeNode* toRemove = find(value);
 
@@ -115,7 +119,7 @@ void BinaryTree::remove(int value)
 		//end loop
 	}
 		//Once the smallest value has been found, copy the data in first iterator to the node we want to remove.
-	
+	iter1 = toRemove;
 
 		//Check if the second iterator has a left child.
 	if (iter2->hasLeft())
@@ -171,7 +175,7 @@ void BinaryTree::remove(int value)
 	{
 		//Set the root to be its left child.
 		m_root = m_root->getLeft();
-
+		
 		//Delete the pointer that points to the node to remove.
 
 	}
@@ -183,7 +187,7 @@ TreeNode* BinaryTree::find(int value)
 	TreeNode* iter = m_root;
 
 	//Loop through the tree while the iterator isn't nullptr.
-	if (iter != nullptr)
+	while (iter != nullptr)
 	{
 		//Check if the node has the data we want
 		if (iter->getData() == value)
@@ -192,24 +196,18 @@ TreeNode* BinaryTree::find(int value)
 			return iter;
 		}
 		//If the node doesn't have the data we want, check to see if it's higher in value.
-		else if (iter->getData() != value)
+		else if (iter->getData() < value)
 		{
-			if (iter->getData() < value)
-			{
-				//Set the iterator to be its current right child.
-				iter = iter->getRight();
-			}
+			//Set the iterator to be its current right child.
+			iter = iter->getRight();
 		}
 		//If the node doesn't have the data we want, check to see if it's lower in value.
-		else if (iter->getData() != value)
+		else if (iter->getData() > value)
 		{
-			if (iter->getData() > value)
-			{
-				//Set the iterator to be its current left child.
-				iter = iter->getLeft();
-			}
+			//Set the iterator to be its current left child.
+			iter = iter->getLeft();
 		}
-	//end loop
+		//end loop
 	}
 	//Return nullptr
 	return nullptr;
