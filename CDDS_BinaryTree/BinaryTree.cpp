@@ -18,9 +18,10 @@ BinaryTree::~BinaryTree()
 void BinaryTree::insert(int value)
 {
 	//If the tree is empty, set the root to be a new node with the given value.
-	if (m_root == nullptr)
+	if (isEmpty())
 	{
 		m_root = new TreeNode(value);
+		return;
 	}
 
 	//Create a TreeNode pointer that will act as an iterator pointing to the current node and set it to the root.
@@ -31,28 +32,28 @@ void BinaryTree::insert(int value)
 	TreeNode* nodeParent = m_root;
 
 	//Loop until the the current node iterator reaches a nullptr.
-	if (currentNode)
+	while (currentNode != nullptr)
 	{
 		//Check if the value we want to add to the tree is less than the value at the current node.
-		if (currentNode->hasLeft())
+		if (value < currentNode->getData())
 		{
 			//Set the parent node to be the current node before the current node moves positions.
-			currentNode = currentNode->getLeft();
+			nodeParent = currentNode;
 			//Change the current node to be the child to its left and continue.
 			currentNode = currentNode->getLeft();
 		}
 
 		//Check if the value we want to add to the tree is greater than the value at the current node.
-		if (currentNode->hasRight())
+		else if (value > currentNode->getData())
 		{
 			//Set the parent node to be the current node before the current node moves positions.
-			nodeParent = currentNode->getRight();
+			nodeParent = currentNode;
 			//Change the current node to be the child to its right and continue.
 			currentNode = currentNode->getRight();
 		}
 
 		//If the value is the same as a value already in the list return 
-		if (value == currentNode->getData())
+		else if (value == currentNode->getData())
 		{
 			return;
 		}
@@ -63,14 +64,12 @@ void BinaryTree::insert(int value)
 	if (value < nodeParent->getData())
 	{
 		nodeParent->setLeft(new TreeNode(value));
-		return;
 	}
 
 	//Otherwise, insert the value to the right.
-	else if (value >= nodeParent->getData())
+	else if (value > nodeParent->getData())
 	{
 		nodeParent->setRight(new TreeNode(value));
-		return;
 	}
 }
 
